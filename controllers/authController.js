@@ -1,6 +1,6 @@
 const express   = require('express');
 const router    = express.Router();
-const User      = require('../models/AuthSchema');
+const Admin      = require('../models/AuthSchema');
 const bcrypt    = require('bcryptjs');
 
 
@@ -25,7 +25,7 @@ router.get('/', async (req,res)=>{
 // check credentials
 router.post('/login', async (req,res)=>{
     try{
-        const foundUser = await User.findOne({'username': req.body.username});
+        const foundUser = await Admin.findOne({'username': req.body.username});
         if(!foundUser){
             res.json({
                 status: 401,
@@ -62,7 +62,7 @@ router.post('/register', async (req,res)=>{
         const hashedPass = bcrypt.hashSync(req.body.password, 10)
         req.body.password = hashedPass;
 
-        const user = await User.create(req.body);
+        const user = await Admin.create(req.body);
 
         req.session.logged = true;
         req.session.username = req.body.username;
