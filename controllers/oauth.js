@@ -13,7 +13,6 @@ router.get('/oauth2callback', passport.authenticate(
         session: false,
     }),
         function(req, res) {
-            console.log(req.user);
             res.redirect(`${process.env.FRONT_END_URL}?name=${req.user.name}&_id=${req.user._id}&email=${req.user.email}`);
         }
 );
